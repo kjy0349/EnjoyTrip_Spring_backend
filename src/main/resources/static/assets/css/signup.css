@@ -1,0 +1,60 @@
+.content {
+  width: 700px;
+  /*height: 100%;*/
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-wrapper {
+  min-width: 600px;
+  padding: 1rem;
+  margin-top: 5rem;
+}
+
+.signup-wrapper h1 {
+  margin-bottom: 2rem;
+}
+
+.signup-wrapper .form-control {
+  padding: 0.75rem;
+}
+
+.signup-wrapper .form-control:hover {
+  border-color: #0c356a;
+}
+
+.signup-wrapper .form-control:focus {
+  border-color: #0c356a;
+  box-shadow: none;
+}
+
+#btn-delete {
+  padding: 0.75rem;	
+}
+
+.btn.signup-btn {
+  padding: 0.75rem;
+  background-color: #0c356a;
+  color: white;
+}
+
+.btn.signup-btn:hover {
+  color: white;
+  background-color: #0c356a;
+}
+
+.email.form-control * {
+  padding: 0;
+}
+
+.email.form-control *:focus {
+  outline-width: 0;
+  box-shadow: none;
+}
+
+.email div {
+  width: auto;
+  margin-right: 1rem;
+}
