@@ -10,10 +10,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +29,7 @@ import javax.servlet.http.HttpSession;
 @RestController
 @RequestMapping("/board")
 @AllArgsConstructor
+@CrossOrigin(origins = "*")
 @Slf4j
 public class BoardRestController {
 
@@ -49,10 +52,18 @@ public class BoardRestController {
         }
     }
 //  수정
-    @PostMapping("")
+    @PutMapping("")
     public ResponseEntity<Map<String, Object>> modifyArticle(@RequestBody BoardDto article) {
     	System.out.println(article);
     	int result = boardService.modifyArticle(article);
+    	if(result != 1) return handleError(result);
+    	else return handleSuccess(result);
+    }
+//    글 작성
+    @PostMapping("/write")
+    public ResponseEntity<Map<String, Object>> writeArticle(@RequestBody BoardDto article) {
+    	System.out.println(article);
+    	int result = boardService.insertArticle(article);
     	if(result != 1) return handleError(result);
     	else return handleSuccess(result);
     }

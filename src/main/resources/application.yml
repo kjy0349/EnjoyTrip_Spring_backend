@@ -1,3 +1,8 @@
+# Web ContextRootPath and PortNumber Settings
+# 서버 포트번호 설정
+server:
+  port: 80
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -8,6 +13,7 @@ spring:
     pathmatch:
       matching-strategy: ant-path-matcher
 
+
 # Mybatis
 mybatis:
   mapper-locations: classpath:/mappers/*.xml
@@ -16,3 +22,6 @@ mybatis:
 logging:
   level:
     com.tripinfo: debug
+    
+
+

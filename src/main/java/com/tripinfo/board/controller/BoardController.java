@@ -21,16 +21,16 @@ public class BoardController {
         return "board/list";
     }
 
-    @GetMapping("/write")
-    public String writeForm() {
-        return "board/write";
-    }
-
-    @PostMapping("/write")
-    public String writeArticle(BoardDto boardDto) {
-        int result = boardService.insertArticle(boardDto);
-        return "redirect:/board";
-    }
+//    @GetMapping("/write")
+//    public String writeForm() {
+//        return "board/write";
+//    }
+//
+//    @PostMapping("/write")
+//    public String writeArticle(BoardDto boardDto) {
+//        int result = boardService.insertArticle(boardDto);
+//        return "redirect:/board";
+//    }
 
     @GetMapping("/view")
     public String viewArticle(int articleno, Model model) {
