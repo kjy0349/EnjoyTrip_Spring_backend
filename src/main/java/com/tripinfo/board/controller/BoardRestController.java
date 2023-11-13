@@ -42,14 +42,21 @@ public class BoardRestController {
         else return handleSuccess(list);
     }
 
-    @GetMapping("/list/{articleno}")
-    public ResponseEntity<Map<String, Object>> getArticle(@PathVariable("articleno") int articleno) {
+    @GetMapping("/list/no/{articleno}")
+    public ResponseEntity<Map<String, Object>> getArticleByNo(@PathVariable("articleno") int articleno) {
 //    	System.out.println("getArticle로 "+articleno+" 넘어왔음");
         BoardDto boardDto = boardService.getArticleByNumber(articleno);
         if (boardDto == null) return handleError(boardDto);
         else {
         	return handleSuccess(boardDto);
         }
+    }
+
+    @GetMapping("/list/subject/{subject}")
+    public ResponseEntity<Map<String, Object>> getArticleBySubject(@PathVariable("subject") String subject){
+        List<BoardDto> result = boardService.getArticlesBySubject(subject);
+        if(result != null) return handleError(result);
+        else return handleSuccess(result);
     }
 //  수정
     @PutMapping("")
