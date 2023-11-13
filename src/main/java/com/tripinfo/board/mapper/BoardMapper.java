@@ -18,6 +18,10 @@ public interface BoardMapper {
     })
     List<BoardDto> getAllArticles();
 
+    @Select("select * from board where subject like '%${subject}%' order by article_no desc")
+    @ResultMap("boardMap")
+    List<BoardDto> getArticlesBySubject(String subject);
+
     @Insert("insert into board (user_id, subject, content) values(#{userId}, #{subject}, #{content})")
     int insertArticle(BoardDto boardDto);
 

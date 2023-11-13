@@ -23,4 +23,5 @@ public class BoardServiceImpl {
     public int deleteArticle(int articleNo) { return boardMapper.deleteArticle(articleNo);}
     
     public int modifyArticle(BoardDto article) { return boardMapper.modifyArticle(article);}
+    public List<BoardDto> getArticlesBySubject(String subject) {return boardMapper.getArticlesBySubject(subject);}
 }
