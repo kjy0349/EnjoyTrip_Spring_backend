@@ -1,0 +1,56 @@
+input.form-control:focus, textarea.form-control:focus {
+  box-shadow: none;
+  border-color: #0c356a;
+}
+
+.content {
+  max-width: 1200px;
+  padding-top: calc(88px + 2rem);
+}
+
+.create.btn {
+  border: 1px solid #4B7AB8;
+  color: #4B7AB8;
+  font-weight: bold;
+}
+
+.create.btn:hover {
+  background-color: #4B7AB8;
+  color: white;
+}
+
+.post-list {
+  margin-top: 2rem;
+}
+
+.post-title {
+  width: 500px;
+}
+
+.post-title a {
+  color: black;
+  text-decoration: none;
+}
+
+.post-title a:hover {
+  text-decoration: underline;
+}
+
+.wrapper {
+  padding: 2rem;
+  border: 1px solid gray;
+  border-radius: 0.5rem;
+}
+
+.detail-info {
+  font-size: 0.875rem;
+  color: gray;
+}
+
+.w-120 {
+	width: 120px;
+}
+
+input.form-control::placeholder, textarea.form-control::placeholder {
+  color: lightgray;
+}
