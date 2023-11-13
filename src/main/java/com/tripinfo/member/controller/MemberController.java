@@ -47,104 +47,104 @@ public class MemberController {
 //			return "redirect:/";
 //		}
 //	}
+//	
+//	@GetMapping("/mvlogin")
+//	public String loginView() {
+//		return "user/login";
+//	}
 	
-	@GetMapping("/mvlogin")
-	public String loginView() {
-		return "user/login";
-	}
+//	@PostMapping("/login")
+//	public String login(String userId, String userPass, HttpSession session, Model model, 
+//		HttpServletResponse response, HttpServletRequest request, @RequestParam(name = "saveid", required = false) String saveid) {
+//		try {
+//			MemberDto member = service.loginMember(userId, userPass);
+//			if(member != null) {
+//				session.setAttribute("userinfo", member);
+//				
+//				Cookie cookie = new Cookie("ssafy_id", userId);
+//				cookie.setPath(request.getContextPath());
+//				if("ok".equals(saveid)) {
+//					cookie.setMaxAge(60*60*24*365*40);
+//				} else {
+//					cookie.setMaxAge(0);
+//				}
+//				response.addCookie(cookie);
+//				return "redirect:/";
+//			}
+//			else {
+//				model.addAttribute("msg", "아이디 또는 비밀번호 확인 후 다시 로그인하세요!");
+//				return "user/login";
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			model.addAttribute("msg", "로그인 중 문제 발생!!!");
+//			return "error/error";
+//		}
+//	}
 	
-	@PostMapping("/login")
-	public String login(String userId, String userPass, HttpSession session, Model model, 
-		HttpServletResponse response, HttpServletRequest request, @RequestParam(name = "saveid", required = false) String saveid) {
-		try {
-			MemberDto member = service.loginMember(userId, userPass);
-			if(member != null) {
-				session.setAttribute("userinfo", member);
-				
-				Cookie cookie = new Cookie("ssafy_id", userId);
-				cookie.setPath(request.getContextPath());
-				if("ok".equals(saveid)) {
-					cookie.setMaxAge(60*60*24*365*40);
-				} else {
-					cookie.setMaxAge(0);
-				}
-				response.addCookie(cookie);
-				return "redirect:/";
-			}
-			else {
-				model.addAttribute("msg", "아이디 또는 비밀번호 확인 후 다시 로그인하세요!");
-				return "user/login";
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("msg", "로그인 중 문제 발생!!!");
-			return "error/error";
-		}
-	}
+//	@GetMapping("/mvusermodify")
+//	public String userModifyView() {
+//		return "user/usermodify";
+//	}
+//	
+//	@PostMapping("/usermodify")
+//	public String userModify(MemberDto member, Model model, RedirectAttributes red, HttpSession session) {
+//		System.out.println(member.getUserId());
+//		try {
+//			service.modify(member);
+//			red.addFlashAttribute("msg", "회원 정보 수정 성공!!");
+//			session.setAttribute("userinfo", member);
+//			return "redirect:/";
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			model.addAttribute("msg", "업데이트 중 문제 발생!!!");
+//			return "error/error";
+//		}
+//	}
 	
-	@GetMapping("/mvusermodify")
-	public String userModifyView() {
-		return "user/usermodify";
-	}
+//	@ResponseBody
+//	@GetMapping("/idcheck")
+//	public int idcheck(String checkid) {
+//		// TODO : 입력한 아이디의 사용여부 체크 (0 : 사용 X, 1 : 사용 O)
+//		System.out.println(checkid);
+//		log.debug("checkid : {}",checkid);
+//		try {
+//			String result = service.idCheck(checkid);
+//			log.debug("result : {}",result);
+//			if(checkid.equals(result)) {
+//				return 1;
+//			}
+//			else {
+//				return 0;
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			return 500;
+//		}
+//	}
 	
-	@PostMapping("/usermodify")
-	public String userModify(MemberDto member, Model model, RedirectAttributes red, HttpSession session) {
-		System.out.println(member.getUserId());
-		try {
-			service.modify(member);
-			red.addFlashAttribute("msg", "회원 정보 수정 성공!!");
-			session.setAttribute("userinfo", member);
-			return "redirect:/";
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("msg", "업데이트 중 문제 발생!!!");
-			return "error/error";
-		}
-	}
+//	@GetMapping("/logout")
+//	public String logout(HttpSession session, RedirectAttributes red) {
+//		session.invalidate();
+//		red.addFlashAttribute("msg", "로그아웃!");
+//		
+//		return "redirect:/";
+//	}
 	
-	@ResponseBody
-	@GetMapping("/idcheck")
-	public int idcheck(String checkid) {
-		// TODO : 입력한 아이디의 사용여부 체크 (0 : 사용 X, 1 : 사용 O)
-		System.out.println(checkid);
-		log.debug("checkid : {}",checkid);
-		try {
-			String result = service.idCheck(checkid);
-			log.debug("result : {}",result);
-			if(checkid.equals(result)) {
-				return 1;
-			}
-			else {
-				return 0;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return 500;
-		}
-	}
-	
-	@GetMapping("/logout")
-	public String logout(HttpSession session, RedirectAttributes red) {
-		session.invalidate();
-		red.addFlashAttribute("msg", "로그아웃!");
-		
-		return "redirect:/";
-	}
-	
-	@GetMapping("/delete")
-	public String delete(String userId, RedirectAttributes red, HttpSession session) {
-		try {
-			service.delete(userId);
-			red.addFlashAttribute("msg", "회원 탈퇴 처리 하였습니다.");
-			session.invalidate();
-			return "redirect:/";
-		} catch (Exception e) {
-			e.printStackTrace();
-			red.addAttribute("msg", "탈퇴 중 문제 발생!!!");
-			return "error/error";
-		}
-		
-	}
+//	@GetMapping("/delete")
+//	public String delete(String userId, RedirectAttributes red, HttpSession session) {
+//		try {
+//			service.delete(userId);
+//			red.addFlashAttribute("msg", "회원 탈퇴 처리 하였습니다.");
+//			session.invalidate();
+//			return "redirect:/";
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			red.addAttribute("msg", "탈퇴 중 문제 발생!!!");
+//			return "error/error";
+//		}
+//		
+//	}
 
 }
