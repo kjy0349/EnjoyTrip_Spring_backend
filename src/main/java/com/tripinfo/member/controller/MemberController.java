@@ -29,24 +29,24 @@ public class MemberController {
 	
 	private final MemberService service;
 	
-	@GetMapping("/mvjoin")
-	public String joinView() {
-		return "user/join";
-	}
+//	@GetMapping("/mvjoin")
+//	public String joinView() {
+//		return "user/join";
+//	}
 	
-	@PostMapping("/join")
-	public String join(@ModelAttribute MemberDto member, Model model, RedirectAttributes red) {
-		try {
-			service.joinMember(member);
-			red.addFlashAttribute("msg", "회원 가입 성공!");
-			return "redirect:/";
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			red.addFlashAttribute("msg", "회원 가입 실패!");
-			return "redirect:/";
-		}
-	}
+//	@PostMapping("/join")
+//	public String join(@ModelAttribute MemberDto member, Model model, RedirectAttributes red) {
+//		try {
+//			service.joinMember(member);
+//			red.addFlashAttribute("msg", "회원 가입 성공!");
+//			return "redirect:/";
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			red.addFlashAttribute("msg", "회원 가입 실패!");
+//			return "redirect:/";
+//		}
+//	}
 	
 	@GetMapping("/mvlogin")
 	public String loginView() {
