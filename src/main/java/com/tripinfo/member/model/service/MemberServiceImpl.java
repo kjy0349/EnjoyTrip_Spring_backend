@@ -39,7 +39,6 @@ public class MemberServiceImpl implements MemberService{
 	public MemberDto loginMember(String userId, String userPass) throws Exception {
 		// userId로 멤버를 가져와서 userPW를 해시 돌린 것과 비교 
 		MemberDto temp = SearchMemberById(userId);
-		
 		if(temp == null) {
 			// 아이디도 없는거
 			return null;
@@ -51,6 +50,7 @@ public class MemberServiceImpl implements MemberService{
 			}
 			else {
 				// 비번 틀림
+				System.out.println("비번 틀림");
 				return null;
 			}
 		}

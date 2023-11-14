@@ -55,8 +55,13 @@ public class MemberRestController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<Map<String, Object>> login(@RequestBody String userId, @RequestBody String password ) throws Exception {
+	public ResponseEntity<Map<String, Object>> login(@RequestBody Map<String, String> user ) throws Exception {
+		String userId = user.get("userId");
+		String password = user.get("password");
+		log.debug("id: {}, password: {}", userId, password);
+		
 		MemberDto member = memberService.loginMember(userId, password);
+		log.debug("result member : {}", member);
 		if (member != null) {
 			return handleSuccess(member);
 		}
@@ -66,7 +71,7 @@ public class MemberRestController {
 	}
 
 // 회원가입
-	@Transactional
+//	@Transactional
 	@PostMapping("/join")
 	public ResponseEntity<Map<String, Object>> joinMember(@RequestBody MemberDto member) throws Exception {
 		System.out.println(member);
