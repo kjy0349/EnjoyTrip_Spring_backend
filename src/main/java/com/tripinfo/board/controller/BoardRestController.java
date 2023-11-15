@@ -66,6 +66,7 @@ public class BoardRestController {
     	if(result != 1) return handleError(result);
     	else return handleSuccess(result);
     }
+    
 //    글 작성
     @PostMapping("/write")
     public ResponseEntity<Map<String, Object>> writeArticle(@RequestBody BoardDto article) {

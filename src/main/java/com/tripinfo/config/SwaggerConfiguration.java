@@ -69,6 +69,11 @@ public class SwaggerConfiguration {
 	public Docket searchApi() {
 		return getDocket("boards", Predicates.or(PathSelectors.regex("/board.*")));
 	}
+	
+	@Bean
+	public Docket commentApi() {
+		return getDocket("comments", Predicates.or(PathSelectors.regex("/comment.*")));
+	}
 
 	@Bean
 	public Docket commonApi() {

@@ -34,4 +34,7 @@ public interface BoardMapper {
     
     @Update("update board set subject = #{subject}, content = #{content} where article_no = #{articleNo}")
     int modifyArticle(BoardDto article);
+    
+    @Update("update board set hit = hit + 1 where article_no = #{articleNo}")
+    int updateHit(int articleNo);
 }
