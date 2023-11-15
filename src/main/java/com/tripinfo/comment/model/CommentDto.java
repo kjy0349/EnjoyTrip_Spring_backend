@@ -1,4 +1,5 @@
-package com.tripinfo.member.model;
+package com.tripinfo.comment.model;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,12 +14,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Builder
-public class MemberDto {
+public class CommentDto {
+	private int commentNo;
 	private String userId;
-	private String userName;
-	private String userPass;
-	private String joinDate;
-	private String emailId;
-	private String emailDomain;
-	private String salt;
+	private int articleNo;
+	private String content;
+	private String registerTime;
 }
