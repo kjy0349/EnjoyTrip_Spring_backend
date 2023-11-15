@@ -21,5 +21,5 @@ public class MemberDto {
 	private String emailId;
 	private String emailDomain;
 	private String salt;
-	private int no;
+	private String refreshToken;
 }

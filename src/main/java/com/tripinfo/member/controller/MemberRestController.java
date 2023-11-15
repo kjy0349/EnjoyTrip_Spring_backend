@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.tripinfo.util.JWTUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +42,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberRestController {
 
 	private final MemberServiceImpl memberService;
+	private final JWTUtil jwtUtil;
 
 	@ResponseBody
 	@GetMapping("/idcheck/{checkid}")
@@ -61,6 +63,24 @@ public class MemberRestController {
 		log.debug("id: {}, password: {}", userId, password);
 		
 		MemberDto member = memberService.loginMember(userId, password);
+		if(member != null) {
+			String accessToken = jwtUtil.createAccessToken(member.getSalt(), member.getUserId());
+			String refreshToken = jwtUtil.createRefreshToken(member.getSalt(), member.getUserId());
+			log.debug("access token : {}", accessToken);
+			log.debug("refresh token : {}", refreshToken);
+
+//				발급받은 refresh token을 DB에 저장.
+			memberService.saveRefreshToken(loginUser.getUserId(), refreshToken);
+
+//				JSON으로 token 전달.
+			resultMap.put("access-token", accessToken);
+			resultMap.put("refresh-token", refreshToken);
+
+			status = HttpStatus.CREATED;
+		} else {
+			resultMap.put("message", "아이디 또는 패스워드를 확인해주세요.");
+			status = HttpStatus.UNAUTHORIZED;
+		}
 		log.debug("result member : {}", member);
 		if (member != null) {
 			return handleSuccess(member);
