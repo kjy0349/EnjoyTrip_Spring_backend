@@ -15,6 +15,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.tripinfo.member.model.MemberDto;
+import com.tripinfo.member.model.FileInfo;
 
 @Mapper
 public interface MemberMapper {
@@ -26,6 +27,9 @@ public interface MemberMapper {
 			+ "values (#{userId}, #{userName}, #{userPass}, #{emailId}, #{emailDomain})")
 	@Options(useGeneratedKeys = true, keyProperty = "no")
 	int joinMember(MemberDto memberDto) throws SQLException;
+	
+	@Insert("insert into file_info (user_id, save_folder, original_file, save_file) values (#{userId}, #{saveFolder}, #{originalFile}, #{saveFile})")
+	int insertFileInfo(FileInfo file);
 
 	@Update("update member set user_name = #{userName}, user_pass = #{userPass}, email_id = #{emailId}, email_domain = #{emailDomain} where user_id = #{userId}")
 	int modify(MemberDto memberDto) throws SQLException;

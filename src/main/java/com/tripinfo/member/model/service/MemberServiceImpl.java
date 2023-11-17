@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import com.tripinfo.member.model.FileInfo;
 import com.tripinfo.member.model.MemberDto;
 import com.tripinfo.member.model.mapper.MemberMapper;
 
@@ -24,10 +25,17 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public int joinMember(MemberDto memberDto) throws Exception {
+	public int joinMember(MemberDto memberDto, FileInfo fileInfo) throws Exception {
 		String encrypted = BCrypt.hashpw(memberDto.getUserPass(), BCrypt.gensalt());
 		memberDto.setUserPass(encrypted);
-		return mapper.joinMember(memberDto);
+		int result = mapper.joinMember(memberDto);
+		if(result > 0) {
+			fileInfo.setUserId(memberDto.getUserId());
+			result = mapper.insertFileInfo(fileInfo);
+		} else {
+			System.out.println("insert error");
+		}
+		return result;
 	}
 
 	@Override

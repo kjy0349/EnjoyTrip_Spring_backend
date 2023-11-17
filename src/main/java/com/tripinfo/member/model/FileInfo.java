@@ -1,7 +1,5 @@
 package com.tripinfo.member.model;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,13 +13,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Builder
-public class MemberDto {
+public class FileInfo {
+	
+	private int no;
 	private String userId;
-	private String userName;
-	private String userPass;
-	private String joinDate;
-	private String emailId;
-	private String emailDomain;
-	private String refreshToken;
-	private MultipartFile imgSrc;
+	private String originalFile;
+	private String saveFile;
+	private String saveFolder;
+	
 }

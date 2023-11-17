@@ -1,43 +1,58 @@
 package com.tripinfo.member.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.UUID;
 
 import com.tripinfo.util.JWTUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.tripinfo.member.model.FileInfo;
 import com.tripinfo.member.model.MemberDto;
 import com.tripinfo.member.model.service.MemberServiceImpl;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
 
+
 @RestController
 @RequestMapping("/user")
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class MemberRestController {
 
 	private final MemberServiceImpl memberService;
 	private final JWTUtil jwtUtil;
 
+	@Value("${spring.servlet.multipart.location}")
+	String path;
+	
 	@ResponseBody
 	@GetMapping("/idcheck/{checkid}")
 	public ResponseEntity<Map<String, Object>> idcheck(@PathVariable("checkid") String checkid) throws Exception {
@@ -49,17 +64,45 @@ public class MemberRestController {
 			return handleSuccess(1);
 		}
 	}
+	
 
-// 회원가입
-//	@Transactional
-	@PostMapping("/join")
-	public ResponseEntity<Map<String, Object>> joinMember(@RequestBody MemberDto member) throws Exception {
-		int result = memberService.joinMember(member);
+	@PostMapping("/file")
+	public ResponseEntity<Map<String, Object>> fileUpload(@ModelAttribute MemberDto member) throws Exception {
+		System.out.println(member);
+		
+		
+		String date = LocalDate.now().toString();
+		File folder = new File(path + "/" + date);
+		if(!folder.exists()) {
+			folder.mkdir();
+		}
+		MultipartFile file = member.getImgSrc();
+		String uuid = UUID.randomUUID().toString();
+		String fileName = file.getOriginalFilename();
+		
+		FileInfo fileInfo = FileInfo.builder().saveFile(uuid).originalFile(fileName).saveFolder(date).build();
+		System.out.println(fileInfo);
+		
+		file.transferTo(new File(date+"/" + uuid + "_" + fileName));
+
+		int result = memberService.joinMember(member, fileInfo);
+		
 		if (result != 1)
 			return handleError(result);
 		else
 			return handleSuccess(result);
 	}
+
+// 회원가입
+//	@Transactional
+//	@PostMapping("/join")
+//	public ResponseEntity<Map<String, Object>> joinMember(@RequestBody MemberDto member) throws Exception {
+//		int result = memberService.joinMember(member);
+//		if (result != 1)
+//			return handleError(result);
+//		else
+//			return handleSuccess(result);
+//	}
 
 //  회원수정
 //수정
