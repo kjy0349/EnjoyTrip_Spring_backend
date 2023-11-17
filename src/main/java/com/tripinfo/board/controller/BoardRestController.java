@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -36,10 +37,19 @@ public class BoardRestController {
     private final BoardServiceImpl boardService;
 
     @GetMapping("/list")
-    public ResponseEntity<Map<String, Object>> getList() {
-        List<BoardDto> list = boardService.getAllArticles();
+    public ResponseEntity<Map<String, Object>> getList(@RequestParam int pgno, @RequestParam int pageSize) {
+    	System.out.println("pgno : " + pgno);
+    	System.out.println("pageSize : " + pageSize);
+        List<BoardDto> list = boardService.getAllArticles(pgno, pageSize);
         if (list == null) return handleError(list);
         else return handleSuccess(list);
+    }
+    
+    @GetMapping("/total")
+    public ResponseEntity<Map<String, Object>> getTotal() {
+    	int total = boardService.getTotal();
+    	if (total != 0) return handleSuccess(total);
+    	else return handleError(total);
     }
 
     @GetMapping("/list/no/{articleno}")

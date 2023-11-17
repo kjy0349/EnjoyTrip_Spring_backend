@@ -7,7 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface BoardMapper {
-    @Select("select * from board order by article_no desc")
+    @Select("select * from board order by article_no desc limit #{start}, #{listsize}")
     @Results(id = "boardMap", value = {
             @Result(column = "article_no", property = "articleNo"),
             @Result(column = "user_id", property = "userId"),
@@ -16,7 +16,10 @@ public interface BoardMapper {
             @Result(column = "hit", property = "hit"),
             @Result(column = "register_time", property = "registerTime")
     })
-    List<BoardDto> getAllArticles();
+    List<BoardDto> getAllArticles(int start, int listsize);
+    
+    @Select("select count(*) from board")
+    int getTotal();
 
     @Select("select * from board where subject like '%${subject}%' order by article_no desc")
     @ResultMap("boardMap")
