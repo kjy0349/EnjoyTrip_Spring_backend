@@ -39,6 +39,8 @@ public interface MemberMapper {
 			@Result(property = "userName", column = "user_name"),
 			@Result(property = "userPass", column = "user_pass"),
 			@Result(property = "emailId", column = "email_id"),
+			@Result(property = "joinDate", column = "join_date"),
+			@Result(property = "refreshToken", column = "token"),
 			@Result(property = "emailDomain", column = "email_domain")
 	})
 	MemberDto SearchMemberById(String userId) throws SQLException;
