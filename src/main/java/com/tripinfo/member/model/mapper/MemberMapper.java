@@ -1,6 +1,7 @@
 package com.tripinfo.member.model.mapper;
 
 import java.sql.SQLException;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -21,23 +22,11 @@ public interface MemberMapper {
 //	@ResultType(String.class)
 	String idCheck(String userId) throws SQLException;
 	
-	@Insert("insert into member (user_id, user_name, user_pass, email_id, email_domain, salt) "
-			+ "values (#{userId}, #{userName}, #{userPass}, #{emailId}, #{emailDomain}, #{salt} )")
+	@Insert("insert into member (user_id, user_name, user_pass, email_id, email_domain) "
+			+ "values (#{userId}, #{userName}, #{userPass}, #{emailId}, #{emailDomain})")
 	@Options(useGeneratedKeys = true, keyProperty = "no")
 	int joinMember(MemberDto memberDto) throws SQLException;
-	
-	
-	@Select("select * from member where user_id = #{userId} and user_pass = #{userPass}")
-	@Results(id = "basicMember" , value = {
-			@Result(property = "userId", column = "user_id"),
-			@Result(property = "userName", column = "user_name"),
-			@Result(property = "userPass", column = "user_pass"),
-			@Result(property = "emailId", column = "email_id"),
-			@Result(property = "emailDomain", column = "email_domain"),
-			@Result(property = "salt", column = "salt")
-	})
-	MemberDto loginMember(String userId, String userPass) throws SQLException;
-	
+
 	@Update("update member set user_name = #{userName}, user_pass = #{userPass}, email_id = #{emailId}, email_domain = #{emailDomain} where user_id = #{userId}")
 	int modify(MemberDto memberDto) throws SQLException;
 	
@@ -45,9 +34,21 @@ public interface MemberMapper {
 	int delete(String userId) throws SQLException;
 	
 	@Select("select * from member where user_id = #{userId}")
-	@ResultMap("basicMember")
+	@Results(id = "basicMember" , value = {
+			@Result(property = "userId", column = "user_id"),
+			@Result(property = "userName", column = "user_name"),
+			@Result(property = "userPass", column = "user_pass"),
+			@Result(property = "emailId", column = "email_id"),
+			@Result(property = "emailDomain", column = "email_domain")
+	})
 	MemberDto SearchMemberById(String userId) throws SQLException;
-	
-	
 
+	@Update("update member set token = #{token} where user_id = #{userId}")
+	void saveRefreshToken(Map<String, String> map) throws SQLException;
+
+	@Select("select toekn from member where user_id = #{userId}")
+	String getRefreshToken(String userId) throws SQLException;
+
+	@Update("update member set token = #{token} where user_id = #{userId}")
+	void deleteRefreshToken(Map<String, String> map) throws SQLException;
 }

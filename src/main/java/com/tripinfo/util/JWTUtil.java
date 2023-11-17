@@ -4,7 +4,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Map;
 
-import com.tripinfo.exception.UnAuthorizedException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -18,19 +17,22 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class JWTUtil {
 
+    @Value("${jwt.salt}")
+    private String salt;
+
     @Value("${jwt.access-token.expiretime}")
     private long accessTokenExpireTiem;
 
     @Value("${jwt.refresh-token.expiretime}")
     private long refreshTokenExpireTime;
 
-    public String createAccessToken(String salt, String userId) {
-        return create(userId, "access-token", salt, accessTokenExpireTiem);
+    public String createAccessToken(String userId) {
+        return create(userId, "access-token", accessTokenExpireTiem);
     }
 
     //	AccessToken에 비해 유효기간을 길게 설정.
-    public String createRefreshToken(String salt, String userId) {
-        return create(userId, "refresh-token", salt, refreshTokenExpireTime);
+    public String createRefreshToken(String userId) {
+        return create(userId, "refresh-token", refreshTokenExpireTime);
     }
 
     //	Token 발급
@@ -39,7 +41,7 @@ public class JWTUtil {
 //		subject : payload에 sub의 value로 들어갈 subject값
 //		expire : 토큰 유효기간 설정을 위한 값
 //		jwt 토큰의 구성 : header + payload + signature
-    private String create(String userId, String subject, String salt, long expireTime) {
+    private String create(String userId, String subject, long expireTime) {
 //		Payload 설정 : 생성일 (IssuedAt), 유효기간 (Expiration),
 //		토큰 제목 (Subject), 데이터 (Claim) 등 정보 세팅.
         Claims claims = Jwts.claims()
@@ -52,14 +54,14 @@ public class JWTUtil {
 
         String jwt = Jwts.builder()
                 .setHeaderParam("typ", "JWT").setClaims(claims) // Header 설정 : 토큰의 타입, 해쉬 알고리즘 정보 세팅.
-                .signWith(SignatureAlgorithm.HS256, this.generateKey(salt)) // Signature 설정 : secret key를 활용한 암호화.
+                .signWith(SignatureAlgorithm.HS256, this.generateKey()) // Signature 설정 : secret key를 활용한 암호화.
                 .compact(); // 직렬화 처리.
 
         return jwt;
     }
 
     //	Signature 설정에 들어갈 key 생성.
-    private byte[] generateKey(String salt) {
+    private byte[] generateKey() {
         byte[] key = null;
         try {
 //			charset 설정 안하면 사용자 플랫폼의 기본 인코딩 설정으로 인코딩 됨.
@@ -75,12 +77,12 @@ public class JWTUtil {
     }
 
     //	전달 받은 토큰이 제대로 생성된것인지 확인 하고 문제가 있다면 UnauthorizedException을 발생.
-    public boolean checkToken(String salt, String token) {
+    public boolean checkToken(String token) {
         try {
 //			Json Web Signature? 서버에서 인증을 근거로 인증정보를 서버의 private key로 서명 한것을 토큰화 한것
 //			setSigningKey : JWS 서명 검증을 위한  secret key 세팅
 //			parseClaimsJws : 파싱하여 원본 jws 만들기
-            Jws<Claims> claims = Jwts.parser().setSigningKey(this.generateKey(salt)).parseClaimsJws(token);
+            Jws<Claims> claims = Jwts.parser().setSigningKey(this.generateKey()).parseClaimsJws(token);
 //			Claims 는 Map의 구현체 형태
             log.debug("claims: {}", claims);
             return true;
@@ -90,17 +92,16 @@ public class JWTUtil {
         }
     }
 
-    public String getUserId(String salt, String authorization) {
+    public String getUserId(String authorization) {
         Jws<Claims> claims = null;
         try {
-            claims = Jwts.parser().setSigningKey(this.generateKey(salt)).parseClaimsJws(authorization);
+            claims = Jwts.parser().setSigningKey(this.generateKey()).parseClaimsJws(authorization);
         } catch (Exception e) {
             log.error(e.getMessage());
-            throw new UnAuthorizedException();
+            return null;
         }
         Map<String, Object> value = claims.getBody();
         log.info("value : {}", value);
         return (String) value.get("userId");
     }
-
 }
