@@ -20,5 +20,7 @@ public class MemberDto {
 	private String joinDate;
 	private String emailId;
 	private String emailDomain;
+	private String refreshToken;
 	private String salt;
+	private String imgSrc;
 }

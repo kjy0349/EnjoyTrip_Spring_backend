@@ -1,6 +1,4 @@
 # Web ContextRootPath and PortNumber Settings
-# 서버 포트번호 설정
-server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -10,7 +8,15 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant-path-matcher
-
+# JWT setting
+jwt:
+  salt: ssafy-screte-key
+  #1 hour (millis)
+  access-token :
+    expiretime: 3600000
+  # 30 days (millis)
+  refresh-token:
+    expiretime: 2592000000
 
 # Mybatis
 mybatis:
