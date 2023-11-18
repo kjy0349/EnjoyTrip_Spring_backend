@@ -6,6 +6,7 @@ import com.tripinfo.member.model.FileInfo;
 import com.tripinfo.member.model.MemberDto;
 
 public interface MemberService {
+	FileInfo getProfilePic(String userId);
 	String idCheck(String userId) throws Exception;
 	int joinMember(MemberDto memberDto, FileInfo fileInfo) throws Exception;
 	MemberDto login(String userId, String userPass) throws Exception;

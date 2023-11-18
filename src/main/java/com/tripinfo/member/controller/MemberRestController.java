@@ -2,6 +2,9 @@ package com.tripinfo.member.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,6 +16,9 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,9 +71,34 @@ public class MemberRestController {
 		}
 	}
 	
+	@GetMapping("/file/{userid}")
+	public ResponseEntity<Resource> fileUpload(@PathVariable("userid") String userId) {
+		FileInfo fileInfo = memberService.getProfilePic(userId);
+		System.out.println(fileInfo);
+		String saveFolder = fileInfo.getSaveFolder();
+		String saveFile = fileInfo.getSaveFile();
+		String originalFile = fileInfo.getOriginalFile();
+		Resource resource = new FileSystemResource(path + "\\" + saveFolder + "\\" + saveFile + "_" + originalFile);
+		System.out.println(resource);
+		
+		if(!resource.exists())
+			return new ResponseEntity<Resource>(HttpStatus.NOT_FOUND);
+		
+		HttpHeaders header = new HttpHeaders();
+		Path filePath = null;
+		try {
+			filePath = Paths.get(path + "\\" + saveFolder + "\\" + saveFile + "_" + originalFile);
+			header.add("Content-Type", Files.probeContentType(filePath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
+	}
+	
 
-	@PostMapping("/file")
-	public ResponseEntity<Map<String, Object>> fileUpload(@ModelAttribute MemberDto member) throws Exception {
+	@PostMapping("/join")
+	public ResponseEntity<Map<String, Object>> joinMember(@ModelAttribute MemberDto member) throws Exception {
 		System.out.println(member);
 		
 		

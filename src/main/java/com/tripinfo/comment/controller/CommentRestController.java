@@ -44,6 +44,7 @@ public class CommentRestController {
 	
 	@PostMapping("/write")
 	public ResponseEntity<Map<String, Object>> writeComment(@RequestBody CommentDto comment){
+		System.out.println("writeComment!!");
 		int result = commentService.writeComment(comment);
     	if(result != 1) return handleError(result);
     	else return handleSuccess(result);

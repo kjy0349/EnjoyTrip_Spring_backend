@@ -95,4 +95,9 @@ public class MemberServiceImpl implements MemberService{
 		map.put("token", null);
 		mapper.deleteRefreshToken(map);
 	}
+
+	@Override
+	public FileInfo getProfilePic(String userId) {
+		return mapper.getProfilePic(userId);
+	}
 }

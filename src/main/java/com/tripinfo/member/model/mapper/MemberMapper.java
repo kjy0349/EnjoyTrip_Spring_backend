@@ -45,9 +45,19 @@ public interface MemberMapper {
 			@Result(property = "emailId", column = "email_id"),
 			@Result(property = "joinDate", column = "join_date"),
 			@Result(property = "refreshToken", column = "token"),
-			@Result(property = "emailDomain", column = "email_domain")
+			@Result(property = "emailDomain", column = "email_domain"),
 	})
 	MemberDto SearchMemberById(String userId) throws SQLException;
+	
+	@Select("select * from file_info where user_id = #{userId}")
+	@Results(id = "basicFileInfo", value = {
+			@Result(property = "userId", column = "user_id"),
+			@Result(property = "no", column = "no"),
+			@Result(property = "originalFile", column = "original_file"),
+			@Result(property = "saveFile", column = "save_file"),
+			@Result(property = "saveFolder", column = "save_folder"),
+	})
+	FileInfo getProfilePic(String userId);
 
 	@Update("update member set token = #{token} where user_id = #{userId}")
 	void saveRefreshToken(Map<String, String> map) throws SQLException;
