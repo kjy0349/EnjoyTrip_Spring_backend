@@ -1,6 +1,8 @@
 package com.tripinfo.tripinfo.mapper;
 
 import com.tripinfo.tripinfo.dto.AttractionInfoDto;
+import com.tripinfo.tripinfo.dto.RouteDetailDto;
+import com.tripinfo.tripinfo.dto.TripRouteDto;
 import com.tripinfo.tripinfo.sql.AttractionSQL;
 import org.apache.ibatis.annotations.*;
 
@@ -37,4 +39,19 @@ public interface AttractionMapper {
 	@ResultMap("attractionMap")
 	@Select("select * from attraction_info order by rand() limit 6")
 	List<AttractionInfoDto> randomAttList();
+	
+	@Insert("insert into trip_route (user_id, title) values (#{userId}, #{title})")
+	@Results(id = "tripRouteMap", value = {
+			@Result(property = "userId", column = "user_id"),
+			@Result(property = "title", column = "title")
+	})
+	int insertTripRoute(TripRouteDto tripRoute);
+	
+	@Insert("insert into route_detail (plan_id, content_id, place_date) values (#{planId}, #{contentId}, #{placeDate})")
+	@Results(id = "routeDetailMap", value = {
+			@Result(property = "planId", column = "plan_id"),
+			@Result(property = "contentId", column = "content_id"),
+			@Result(property = "placeDate", column = "place_date"),
+	})
+	int insertRouteDetail(RouteDetailDto routeDetail);
 }
