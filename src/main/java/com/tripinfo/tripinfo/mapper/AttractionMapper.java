@@ -30,6 +30,10 @@ public interface AttractionMapper {
 			@Result(property = "mlevel", column ="mlevel"),
 	})
 	List<AttractionInfoDto> getAllAttractionList();
+	
+	@ResultMap("attractionMap")
+	@Select("select * from attraction_info where content_id = #{contentId}")
+	List<AttractionInfoDto> getAllAttractionByContentId();
 
 	// sidoCode가 0이 아니면 넣어주기.
 	@ResultMap("attractionMap")
@@ -41,17 +45,35 @@ public interface AttractionMapper {
 	List<AttractionInfoDto> randomAttList();
 	
 	@Insert("insert into trip_route (user_id, title) values (#{userId}, #{title})")
-	@Results(id = "tripRouteMap", value = {
-			@Result(property = "userId", column = "user_id"),
-			@Result(property = "title", column = "title")
-	})
 	int insertTripRoute(TripRouteDto tripRoute);
 	
 	@Insert("insert into route_detail (plan_id, content_id, place_date) values (#{planId}, #{contentId}, #{placeDate})")
+//	@Results(id = "routeDetailMap", value = {
+//			@Result(property = "no", column = "no"),
+//			@Result(property = "planId", column = "plan_id"),
+//			@Result(property = "contentId", column = "content_id"),
+//			@Result(property = "placeDate", column = "place_date"),
+//	})
+	int insertRouteDetail(RouteDetailDto routeDetail);
+	
+	@Select("select * from trip_route where user_id = #{userId} and title = #{title}")
+	@Results(id = "tripRouteMap", value = {
+			@Result(property = "planId", column = "plan_id"),
+			@Result(property = "userId", column = "user_id"),
+			@Result(property = "title", column = "title")
+	})
+	TripRouteDto searchByUserIdTitle(String userId, String title);
+	
+	@Select("select * from trip_route where user_id = #{userId}")
+	@ResultMap("tripRouteMap")
+	List<TripRouteDto> searchAllTripRouteByUserId(String userId);
+	// 조인으로 바꿔도 되려나
+	@Select("select * from route_detail where plan_id = #{planId}")
 	@Results(id = "routeDetailMap", value = {
+			@Result(property = "no", column = "no"),
 			@Result(property = "planId", column = "plan_id"),
 			@Result(property = "contentId", column = "content_id"),
 			@Result(property = "placeDate", column = "place_date"),
 	})
-	int insertRouteDetail(RouteDetailDto routeDetail);
+	List<RouteDetailDto> searchAllRouteDetailByPlanId(int planId);
 }

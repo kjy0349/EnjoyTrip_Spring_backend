@@ -62,6 +62,8 @@ public class AttractionRestController {
     	}
     	for (RouteDetailDto dto : detailList) System.out.println(dto);
     	
+    	int result = service.insertPlanInfo(routeDto, detailList);
+    	
 //    	Map<String, Object> temp = (Map<String, Object>) map.get("route");
 //    	
 //    	TripRouteDto tripRoute = TripRouteDto.builder().userId(" ").title(" ").build();
