@@ -23,8 +23,8 @@ public interface MemberMapper {
 //	@ResultType(String.class)
 	String idCheck(String userId) throws SQLException;
 	
-	@Insert("insert into member (user_id, user_name, user_pass, email_id, email_domain) "
-			+ "values (#{userId}, #{userName}, #{userPass}, #{emailId}, #{emailDomain})")
+	@Insert("insert into member (user_id, user_name, user_pass, email_id, email_domain, mbti, gender, age) "
+			+ "values (#{userId}, #{userName}, #{userPass}, #{emailId}, #{emailDomain}, #{mbti}, #{gender}, #{age})")
 	@Options(useGeneratedKeys = true, keyProperty = "no")
 	int joinMember(MemberDto memberDto) throws SQLException;
 	
@@ -48,7 +48,7 @@ public interface MemberMapper {
 			@Result(property = "emailDomain", column = "email_domain"),
 	})
 	MemberDto SearchMemberById(String userId) throws SQLException;
-	
+
 	@Select("select * from file_info where user_id = #{userId}")
 	@Results(id = "basicFileInfo", value = {
 			@Result(property = "userId", column = "user_id"),
@@ -62,7 +62,7 @@ public interface MemberMapper {
 	@Update("update member set token = #{token} where user_id = #{userId}")
 	void saveRefreshToken(Map<String, String> map) throws SQLException;
 
-	@Select("select toekn from member where user_id = #{userId}")
+	@Select("select token from member where user_id = #{userId}")
 	String getRefreshToken(String userId) throws SQLException;
 
 	@Update("update member set token = #{token} where user_id = #{userId}")

@@ -30,7 +30,6 @@ import javax.servlet.http.HttpSession;
 @RestController
 @RequestMapping("/board")
 @AllArgsConstructor
-@CrossOrigin(origins = "*")
 @Slf4j
 public class BoardRestController {
 
