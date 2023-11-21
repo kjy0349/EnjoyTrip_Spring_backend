@@ -78,7 +78,7 @@ public class MemberRestController {
 		String saveFolder = fileInfo.getSaveFolder();
 		String saveFile = fileInfo.getSaveFile();
 		String originalFile = fileInfo.getOriginalFile();
-		Resource resource = new FileSystemResource(path + "\\" + saveFolder + "\\" + saveFile + "_" + originalFile);
+		Resource resource = new FileSystemResource(path + "/" + saveFolder + "/" + saveFile + "_" + originalFile);
 		System.out.println(resource);
 		
 		if(!resource.exists())
