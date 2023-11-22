@@ -67,4 +67,13 @@ public interface MemberMapper {
 
 	@Update("update member set token = #{token} where user_id = #{userId}")
 	void deleteRefreshToken(Map<String, String> map) throws SQLException;
+
+	@Select("select * from member where user_id = #{userId}")
+	@Results(id = "memberInfo" , value = {
+			@Result(property = "userName", column = "user_name"),
+			@Result(property = "joinDate", column = "join_date"),
+			@Result(property = "emailDomain", column = "email_domain"),
+			@Result(property = "emailDomain", column = "email_domain"),
+	})
+	MemberDto getMemberInfoById(String userId) throws SQLException;
 }
