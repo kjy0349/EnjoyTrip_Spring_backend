@@ -79,6 +79,7 @@ public class MemberRestController {
 		String saveFile = fileInfo.getSaveFile();
 		String originalFile = fileInfo.getOriginalFile();
 		Resource resource = new FileSystemResource(path + "/" + saveFolder + "/" + saveFile + "_" + originalFile);
+//		Resource resource = new FileSystemResource(path + "\\" + saveFolder + "\\" + saveFile + "_" + originalFile);
 		System.out.println(resource);
 		
 		if(!resource.exists())
@@ -87,7 +88,8 @@ public class MemberRestController {
 		HttpHeaders header = new HttpHeaders();
 		Path filePath = null;
 		try {
-			filePath = Paths.get(path + "\\" + saveFolder + "\\" + saveFile + "_" + originalFile);
+//			filePath = Paths.get(path + "\\" + saveFolder + "\\" + saveFile + "_" + originalFile);
+			filePath = Paths.get(path + "/" + saveFolder + "/" + saveFile + "_" + originalFile);
 			header.add("Content-Type", Files.probeContentType(filePath));
 		} catch (IOException e) {
 			e.printStackTrace();

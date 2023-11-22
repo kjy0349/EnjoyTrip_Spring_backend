@@ -28,6 +28,14 @@ public class TripBoardRestController {
         if (list != null) return handleSuccess(list);
         else return handleError(null);
     }
+    
+    @GetMapping("/userinfo/{userId}")
+    public ResponseEntity<Map<String, Object>> getArticleUserInfo(@PathVariable("userId") String userId) {
+//        List<TripRouteDto> list = tripBoardService.getArticleUserInfo(userId);
+//        if (list != null) return handleSuccess(list);
+//        else return handleError(null);
+    	return null;
+    }
     @GetMapping("/list")
     public ResponseEntity<Map<String, Object>> getTripList(@RequestParam int pgno, @RequestParam int pageSize) {
     	System.out.println("pgno : " + pgno);
