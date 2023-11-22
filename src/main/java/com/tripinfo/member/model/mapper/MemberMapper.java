@@ -88,7 +88,7 @@ public interface MemberMapper {
 
 	@Select("select *\n" +
 			"from trip_board\n" +
-			"where article_no = (select tc.article_no\n" +
+			"where article_no in (select tc.article_no\n" +
 			"from trip_comment tc join trip_board tb\n" +
 			"on tc.article_no = tb.article_no\n" +
 			"where tc.user_id = #{userId} and tc.chosen = 1)")
