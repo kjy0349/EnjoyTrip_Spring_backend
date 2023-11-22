@@ -53,4 +53,7 @@ public interface TripBoardMapper {
     
     @Update("update trip_board set hit = hit + 1 where article_no = #{articleNo}")
     int updateTripHit(int articleNo);
+
+    @Select("select * from route_detail where plan_id = #{planId} order by place_date")
+    int getRouteDetails(int planId);
 }

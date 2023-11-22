@@ -92,6 +92,14 @@ public class TripBoardRestController {
     	if(result != 1) return handleError(result);
     	else return handleSuccess(result);
     }
+
+    @GetMapping("/plan/{planId}")
+    public ResponseEntity<Map<String, Object>> getRouteDetails(@PathVariable("planId") int planId){
+        int result = tripBoardService.getRouteDetails(planId);
+        if(result != 1) return handleError(result);
+        else return handleSuccess(result);
+    }
+
     
     private ResponseEntity<Map<String, Object>> handleSuccess(Object data) {
         Map<String, Object> result = new HashMap<>();

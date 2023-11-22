@@ -38,4 +38,6 @@ public class TripBoardServiceImpl {
 	}
 
     public List<TripRouteDto> getTripRouteByUserId(String userId) { return tripBoardMapper.getTripRouteByUserId(userId);}
+
+    public int getRouteDetails(int planId) {return tripBoardMapper.getRouteDetails(planId);}
 }
