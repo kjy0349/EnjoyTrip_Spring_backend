@@ -1,6 +1,7 @@
 package com.tripinfo.tripboard.controller;
 
 import com.tripinfo.tripboard.dto.TripBoardRouteDetailDto;
+import com.tripinfo.member.MemberInfoDto;
 import com.tripinfo.tripboard.dto.TripBoardDto;
 import com.tripinfo.tripboard.dto.TripRouteDto;
 import com.tripinfo.tripboard.service.TripBoardServiceImpl;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +28,13 @@ public class TripBoardRestController {
     public ResponseEntity<Map<String, Object>> getTripRouteByUserId(@PathVariable("userId") String userId) {
         List<TripRouteDto> list = tripBoardService.getTripRouteByUserId(userId);
         if (list != null) return handleSuccess(list);
+        else return handleError(null);
+    }
+    
+    @GetMapping("/userinfo/{userId}")
+    public ResponseEntity<Map<String, Object>> getArticleUserInfo(@PathVariable("userId") String userId) throws SQLException {
+        MemberInfoDto dto = tripBoardService.getArticleUserInfo(userId);
+        if (dto != null) return handleSuccess(dto);
         else return handleError(null);
     }
     @GetMapping("/list")
