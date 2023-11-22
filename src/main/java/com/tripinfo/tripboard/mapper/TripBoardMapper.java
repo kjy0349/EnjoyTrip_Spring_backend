@@ -1,5 +1,6 @@
 package com.tripinfo.tripboard.mapper;
 
+import com.tripinfo.tripboard.dto.TripBoardRouteDetailDto;
 import com.tripinfo.tripboard.dto.TripBoardDto;
 import com.tripinfo.tripboard.dto.TripRouteDto;
 import org.apache.ibatis.annotations.*;
@@ -54,6 +55,15 @@ public interface TripBoardMapper {
     @Update("update trip_board set hit = hit + 1 where article_no = #{articleNo}")
     int updateTripHit(int articleNo);
 
-    @Select("select * from route_detail where plan_id = #{planId} order by place_date")
-    int getRouteDetails(int planId);
+    @Select("select ai.first_image, ai.first_image2, rd.place_date\n" +
+            "from attraction_info as ai join route_detail rd\n" +
+            "on ai.content_id = rd.content_id\n" +
+            "where rd.plan_id = #{planId}\n" +
+            "order by rd.place_date")
+    @Results(id="routeDetail", value = {
+            @Result(column = "first_image", property = "firstImage"),
+            @Result(column = "first_image2", property = "firstImage2"),
+            @Result(column = "place_date", property = "placeDate"),
+    })
+    List<TripBoardRouteDetailDto> getRouteDetails(int planId);
 }

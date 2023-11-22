@@ -4,10 +4,7 @@ import com.tripinfo.tripinfo.dto.AttractionInfoDto;
 import com.tripinfo.tripinfo.dto.RouteDetailDto;
 import com.tripinfo.tripinfo.dto.TripRouteDto;
 import com.tripinfo.tripinfo.mapper.AttractionMapper;
-import com.tripinfo.tripinfo.sql.AttractionSQL;
 import lombok.AllArgsConstructor;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectProvider;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

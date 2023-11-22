@@ -1,5 +1,6 @@
 package com.tripinfo.tripboard.service;
 
+import com.tripinfo.tripboard.dto.TripBoardRouteDetailDto;
 import com.tripinfo.tripboard.dto.TripBoardDto;
 import com.tripinfo.tripboard.dto.TripRouteDto;
 import com.tripinfo.tripboard.mapper.TripBoardMapper;
@@ -39,5 +40,5 @@ public class TripBoardServiceImpl {
 
     public List<TripRouteDto> getTripRouteByUserId(String userId) { return tripBoardMapper.getTripRouteByUserId(userId);}
 
-    public int getRouteDetails(int planId) {return tripBoardMapper.getRouteDetails(planId);}
+    public List<TripBoardRouteDetailDto> getRouteDetails(int planId) {return tripBoardMapper.getRouteDetails(planId);}
 }

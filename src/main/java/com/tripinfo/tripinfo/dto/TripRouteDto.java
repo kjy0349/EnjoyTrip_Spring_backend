@@ -1,25 +1,15 @@
 package com.tripinfo.tripinfo.dto;
 
-import com.tripinfo.board.dto.BoardDto;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
 @ToString
 @Builder
 public class TripRouteDto {
-	private int planId; 
-	private String userId;
-	private String title;
-
+    private int planId;
+    private String userId;
+    private String title;
 }

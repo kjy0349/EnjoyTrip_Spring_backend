@@ -40,52 +40,31 @@ public class AttractionRestController {
             return handleSuccess(sido);
         } else return handleError(sido);
     }
-    
+
     @PostMapping("/insert")
     public ResponseEntity<Map<String, Object>> insertPlanInfo(@RequestBody Map<String, Object> map) {
-    	
-    	
+
+
     	System.out.println();
     	System.out.println(map.get("places"));
     	ObjectMapper mapper = new ObjectMapper();
-    	
+
     	TripRouteDto routeDto= mapper.convertValue(map.get("route"), TripRouteDto.class);
-    	
+
     	System.out.println(routeDto);
-    	
+
     	List<Object> list = (List<Object>) map.get("places");
     	List<RouteDetailDto> detailList = new ArrayList<>();
 //    	RouteDetailDto detailDto = mapper.convertValue(map.get("places"), RouteDetailDto.class);
-//    	
+//
     	for(Object object: list) {
     		detailList.add(mapper.convertValue(object, RouteDetailDto.class));
     	}
     	for (RouteDetailDto dto : detailList) System.out.println(dto);
-    	
+
     	int result = service.insertPlanInfo(routeDto, detailList);
-    	
-//    	Map<String, Object> temp = (Map<String, Object>) map.get("route");
-//    	
-//    	TripRouteDto tripRoute = TripRouteDto.builder().userId(" ").title(" ").build();
-//    	
-//    	
-//    	for(Entry<String, Object> t: temp.entrySet()) {
-//    		System.out.println(t.getKey());
-//    		System.out.println(t.getValue());
-//    		if(t.getKey().equals(anObject))
-//    	}
-    	
-//    	TripRouteDto tripRoute = (TripRouteDto)map.get("route");
-//    	System.out.println("tripRoute는 됨");
-//    	List<RouteDetailDto> routeDetails = (List)map.get("places");
-//    	System.out.println("routeDetails도 됨");
-    	
-//    	for(RouteDetailDto item : routeDetails) {
-//    		System.out.println(item);
-//    	}
-//    	
-    	
-    	return null;
+        if (result == 0) return handleError(result);
+        else return handleSuccess(result);
     }
 
     @GetMapping("/attinfo/{contentId}/{sidoCode}/{title}")

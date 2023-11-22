@@ -1,9 +1,9 @@
 package com.tripinfo.tripboard.controller;
 
+import com.tripinfo.tripboard.dto.TripBoardRouteDetailDto;
 import com.tripinfo.tripboard.dto.TripBoardDto;
 import com.tripinfo.tripboard.dto.TripRouteDto;
 import com.tripinfo.tripboard.service.TripBoardServiceImpl;
-import io.swagger.models.Response;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -87,9 +87,9 @@ public class TripBoardRestController {
 
     @GetMapping("/plan/{planId}")
     public ResponseEntity<Map<String, Object>> getRouteDetails(@PathVariable("planId") int planId){
-        int result = tripBoardService.getRouteDetails(planId);
-        if(result != 1) return handleError(result);
-        else return handleSuccess(result);
+        List<TripBoardRouteDetailDto> list = tripBoardService.getRouteDetails(planId);
+        if(list == null) return handleError(null);
+        else return handleSuccess(list);
     }
 
     

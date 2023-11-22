@@ -63,11 +63,7 @@ public interface AttractionMapper {
 			@Result(property = "title", column = "title")
 	})
 	TripRouteDto searchByUserIdTitle(String userId, String title);
-	
-	@Select("select * from trip_route where user_id = #{userId}")
-	@ResultMap("tripRouteMap")
-	List<TripRouteDto> searchAllTripRouteByUserId(String userId);
-	// 조인으로 바꿔도 되려나
+
 	@Select("select * from route_detail where plan_id = #{planId}")
 	@Results(id = "routeDetailMap", value = {
 			@Result(property = "no", column = "no"),
