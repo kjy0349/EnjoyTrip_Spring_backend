@@ -49,4 +49,8 @@ public class TripBoardServiceImpl {
 	public MemberInfoDto getArticleUserInfo(String userId) throws SQLException {
 		return memberMapper.getMemberInfoById(userId);
 	}
+
+    public List<TripBoardDto> getTripArticlesById(String userId) {
+        return tripBoardMapper.getTripArticlesById(userId);
+    }
 }

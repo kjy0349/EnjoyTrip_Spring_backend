@@ -25,6 +25,10 @@ public interface TripBoardMapper {
     @Select("select count(*) from trip_board")
     int getTotal();
 
+    @Select("select * from trip_board where user_id=#{userId} order by article_no desc")
+    @ResultMap("tripBoardMap")
+    List<TripBoardDto> getTripArticlesById(String userId);
+
     @Select("select * from trip_board where subject like '%${subject}%' order by article_no desc")
     @ResultMap("tripBoardMap")
     List<TripBoardDto> getTripArticlesBySubject(String subject);

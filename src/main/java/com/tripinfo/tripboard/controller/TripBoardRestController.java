@@ -69,6 +69,14 @@ public class TripBoardRestController {
         if(result != null) return handleError(result);
         else return handleSuccess(null);
     }
+
+    @GetMapping("/list/Id/{userId}")
+    public ResponseEntity<Map<String, Object>> getTripArticlesById(@PathVariable("userId") String userId){
+        List<TripBoardDto> result = tripBoardService.getTripArticlesById(userId);
+        if(result != null) return handleError(result);
+        else return handleSuccess(null);
+    }
+
 //  수정
     @PutMapping("")
     public ResponseEntity<Map<String, Object>> modifyArticle(@RequestBody TripBoardDto article) {
