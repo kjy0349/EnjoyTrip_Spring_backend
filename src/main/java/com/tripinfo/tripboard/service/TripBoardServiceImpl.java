@@ -1,17 +1,21 @@
 package com.tripinfo.tripboard.service;
 
+import com.tripinfo.member.MemberInfoDto;
+import com.tripinfo.member.model.mapper.MemberMapper;
 import com.tripinfo.tripboard.dto.TripBoardDto;
 import com.tripinfo.tripboard.dto.TripRouteDto;
 import com.tripinfo.tripboard.mapper.TripBoardMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class TripBoardServiceImpl {
     private final TripBoardMapper tripBoardMapper;
+    private final MemberMapper memberMapper;
 
     public List<TripBoardDto> getAllTripArticles(int pgno, int pageSize) {
     	int start = pgno * pageSize - pageSize;
@@ -40,4 +44,8 @@ public class TripBoardServiceImpl {
     public List<TripRouteDto> getTripRouteByUserId(String userId) { return tripBoardMapper.getTripRouteByUserId(userId);}
 
     public int getRouteDetails(int planId) {return tripBoardMapper.getRouteDetails(planId);}
+
+	public MemberInfoDto getArticleUserInfo(String userId) throws SQLException {
+		return memberMapper.getMemberInfoById(userId);
+	}
 }

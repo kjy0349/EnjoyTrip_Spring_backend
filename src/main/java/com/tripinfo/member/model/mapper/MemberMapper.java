@@ -15,6 +15,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.tripinfo.member.model.MemberDto;
+import com.tripinfo.member.MemberInfoDto;
 import com.tripinfo.member.model.FileInfo;
 
 @Mapper
@@ -68,12 +69,18 @@ public interface MemberMapper {
 	@Update("update member set token = #{token} where user_id = #{userId}")
 	void deleteRefreshToken(Map<String, String> map) throws SQLException;
 
-	@Select("select * from member where user_id = #{userId}")
+	@Select("select user_name, join_date, star, star_count, mbti, gender, age, hit, content, profile_no from member where user_id = #{userId}")
 	@Results(id = "memberInfo" , value = {
 			@Result(property = "userName", column = "user_name"),
 			@Result(property = "joinDate", column = "join_date"),
-			@Result(property = "emailDomain", column = "email_domain"),
-			@Result(property = "emailDomain", column = "email_domain"),
+			@Result(property = "star", column = "star"),
+			@Result(property = "starCount", column = "star_count"),
+			@Result(property = "mbti", column = "mbti"),
+			@Result(property = "gender", column = "gender"),
+			@Result(property = "age", column = "age"),
+			@Result(property = "hit", column = "hit"),
+			@Result(property = "content", column = "content"),
+			@Result(property = "profileNo", column = "profile_no")
 	})
-	MemberDto getMemberInfoById(String userId) throws SQLException;
+	MemberInfoDto getMemberInfoById(String userId) throws SQLException;
 }
