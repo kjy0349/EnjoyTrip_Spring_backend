@@ -12,4 +12,5 @@ public class TripBoardRouteDetailDto {
     private String firstImage;
     private String firstImage2;
     private String placeDate;
+    private String title;
 }

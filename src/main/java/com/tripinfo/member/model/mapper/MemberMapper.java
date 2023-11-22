@@ -1,8 +1,10 @@
 package com.tripinfo.member.model.mapper;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
+import com.tripinfo.tripboard.dto.TripBoardDto;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -83,4 +85,22 @@ public interface MemberMapper {
 			@Result(property = "profileNo", column = "profile_no")
 	})
 	MemberInfoDto getMemberInfoById(String userId) throws SQLException;
+
+	@Select("select *\n" +
+			"from trip_board\n" +
+			"where article_no = (select tc.article_no\n" +
+			"from trip_comment tc join trip_board tb\n" +
+			"on tc.article_no = tb.article_no\n" +
+			"where tc.user_id = #{userId} and tc.chosen = 1)")
+	@Results(id = "tripBoardMap", value = {
+			@Result(column = "article_no", property = "articleNo"),
+			@Result(column = "user_id", property = "userId"),
+			@Result(column = "subject", property = "subject"),
+			@Result(column = "content", property = "content"),
+			@Result(column = "hit", property = "hit"),
+			@Result(column = "plan_id", property="planId"),
+			@Result(column = "cost", property="cost"),
+			@Result(column = "register_time", property = "registerTime")
+	})
+	List<TripBoardDto> getMyTripList(String userId);
 }

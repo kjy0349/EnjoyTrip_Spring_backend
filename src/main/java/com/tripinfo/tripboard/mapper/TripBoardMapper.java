@@ -55,7 +55,7 @@ public interface TripBoardMapper {
     @Update("update trip_board set hit = hit + 1 where article_no = #{articleNo}")
     int updateTripHit(int articleNo);
 
-    @Select("select ai.first_image, ai.first_image2, rd.place_date\n" +
+    @Select("select ai.first_image, ai.first_image2, rd.place_date, ai.title\n" +
             "from attraction_info as ai join route_detail rd\n" +
             "on ai.content_id = rd.content_id\n" +
             "where rd.plan_id = #{planId}\n" +
@@ -64,6 +64,7 @@ public interface TripBoardMapper {
             @Result(column = "first_image", property = "firstImage"),
             @Result(column = "first_image2", property = "firstImage2"),
             @Result(column = "place_date", property = "placeDate"),
+            @Result(column = "title", property = "title")
     })
     List<TripBoardRouteDetailDto> getRouteDetails(int planId);
 }

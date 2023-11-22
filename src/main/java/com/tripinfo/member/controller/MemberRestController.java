@@ -6,11 +6,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
+import com.tripinfo.tripboard.dto.TripBoardDto;
 import com.tripinfo.util.JWTUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -96,6 +94,13 @@ public class MemberRestController {
 		}
 		
 		return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
+	}
+
+	@GetMapping("/mytrip/{userId}")
+	public ResponseEntity<Map<String, Object>> getMyTripList(@PathVariable("userId") String userId) {
+		List<TripBoardDto> myTripList = memberService.getMyTripList(userId);
+		if (myTripList == null) return handleError(null);
+		else return handleSuccess(myTripList);
 	}
 	
 

@@ -2,8 +2,10 @@ package com.tripinfo.member.model.service;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.tripinfo.tripboard.dto.TripBoardDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -100,4 +102,7 @@ public class MemberServiceImpl implements MemberService{
 	public FileInfo getProfilePic(String userId) {
 		return mapper.getProfilePic(userId);
 	}
+
+	@Override
+	public List<TripBoardDto> getMyTripList(String userId) { return mapper.getMyTripList(userId);}
 }
