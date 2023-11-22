@@ -45,7 +45,11 @@ public interface AttractionMapper {
 	List<AttractionInfoDto> randomAttList();
 	
 	@Insert("insert into trip_route (user_id, title) values (#{userId}, #{title})")
+//	이렇게하면 dto planId에 자동으로 넣어줌 ㅋㅋ
+	@Options(useGeneratedKeys = true, keyProperty = "planId")
 	int insertTripRoute(TripRouteDto tripRoute);
+	
+//	@SelectKey(statement = "SELECT identity('plan_id')", keyProperty = "planId", before=false, resultType = int.class)
 	
 	@Insert("insert into route_detail (plan_id, content_id, place_date) values (#{planId}, #{contentId}, #{placeDate})")
 //	@Results(id = "routeDetailMap", value = {
@@ -63,6 +67,7 @@ public interface AttractionMapper {
 			@Result(property = "title", column = "title")
 	})
 	TripRouteDto searchByUserIdTitle(String userId, String title);
+	
 
 	@Select("select * from route_detail where plan_id = #{planId}")
 	@Results(id = "routeDetailMap", value = {

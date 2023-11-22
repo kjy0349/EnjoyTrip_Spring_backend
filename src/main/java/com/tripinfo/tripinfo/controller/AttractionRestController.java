@@ -43,24 +43,20 @@ public class AttractionRestController {
 
     @PostMapping("/insert")
     public ResponseEntity<Map<String, Object>> insertPlanInfo(@RequestBody Map<String, Object> map) {
-
-
-    	System.out.println();
-    	System.out.println(map.get("places"));
+    	// mapper로 routeDto 맞춰주기
     	ObjectMapper mapper = new ObjectMapper();
-
     	TripRouteDto routeDto= mapper.convertValue(map.get("route"), TripRouteDto.class);
 
-    	System.out.println(routeDto);
-
+//    	System.out.println(routeDto);
+    	
+    	// mapper로 리스트로 받아온 RouteDetailDto 맞춰주기
     	List<Object> list = (List<Object>) map.get("places");
     	List<RouteDetailDto> detailList = new ArrayList<>();
-//    	RouteDetailDto detailDto = mapper.convertValue(map.get("places"), RouteDetailDto.class);
-//
+    	
     	for(Object object: list) {
     		detailList.add(mapper.convertValue(object, RouteDetailDto.class));
     	}
-    	for (RouteDetailDto dto : detailList) System.out.println(dto);
+//    	for (RouteDetailDto dto : detailList) System.out.println(dto);
 
     	int result = service.insertPlanInfo(routeDto, detailList);
         if (result == 0) return handleError(result);

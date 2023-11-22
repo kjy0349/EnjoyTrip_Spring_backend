@@ -1,5 +1,7 @@
 package com.tripinfo.tripinfo.dto;
 
+import java.sql.Date;
+
 import lombok.*;
 
 @Getter
@@ -12,5 +14,5 @@ public class RouteDetailDto {
     private int no;
     private int planId;
     private int contentId;
-    private String placeDate;
+    private Date placeDate;
 }

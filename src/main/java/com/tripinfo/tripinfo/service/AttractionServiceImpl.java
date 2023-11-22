@@ -31,18 +31,25 @@ public class AttractionServiceImpl {
 		// title이랑 userId로 routeDto를 찾아서 plan_id를 찾아야 할듯
 		String title = routeDto.getTitle();
 		String userId = routeDto.getUserId();
-		int result = mapper.insertTripRoute(routeDto);
-		if(result > 0) {
-			TripRouteDto temp = mapper.searchByUserIdTitle(userId, title);
-			int planId = temp.getPlanId();
-			for(RouteDetailDto dto: detailList) {
-				dto.setPlanId(planId);
-				result = mapper.insertRouteDetail(dto);
-				if(result <= 0) return result;
+		TripRouteDto checkDto = mapper.searchByUserIdTitle(userId, title);
+		if(checkDto == null) {
+			int result = mapper.insertTripRoute(routeDto);
+			System.out.println("plan_id : " + routeDto.getPlanId());
+			if(result > 0) {
+				int planId = routeDto.getPlanId();
+				for(RouteDetailDto dto: detailList) {
+					dto.setPlanId(planId);
+					result = mapper.insertRouteDetail(dto);
+					if(result <= 0) return result;
+				}
+				return result;
 			}
+			
 			return result;
+		} else {
+			// 중복된 타이틀명
+			return 0;
 		}
 		
-		return result;
 	}
 }
