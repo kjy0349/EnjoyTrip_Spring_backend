@@ -25,11 +25,11 @@ public class MemberDto {
 	private String refreshToken;
 	private MultipartFile imgSrc;
 	private float star;
-	private int star_count;
+	private int starCount;
 	private String mbti;
 	private String gender;
 	private int age;
 	private int hit;
 	private String content;
-	private int profile_no;
+	private int profileNo;
 }

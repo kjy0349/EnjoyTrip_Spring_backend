@@ -62,8 +62,6 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public int modify(MemberDto memberDto) throws Exception { // 추가 수정 가능
-		MemberDto temp = SearchMemberById(memberDto.getUserId());
-		memberDto.setUserPass(BCrypt.hashpw(temp.getUserId(), BCrypt.gensalt()));
 		return mapper.modify(memberDto);
 	}
 

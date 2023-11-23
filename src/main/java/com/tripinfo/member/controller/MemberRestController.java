@@ -148,6 +148,8 @@ public class MemberRestController {
 	@PutMapping("/modify")
 	public ResponseEntity<Map<String, Object>> modifyMember(@RequestBody MemberDto member) throws Exception {
 		log.debug("{}", member);
+		System.out.println("Update 요청 처리바람");
+		System.out.println(member);
 		int result = memberService.modify(member);
 		if (result != 1)
 			return handleError(result);

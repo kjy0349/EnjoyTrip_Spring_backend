@@ -26,16 +26,27 @@ public interface MemberMapper {
 //	@ResultType(String.class)
 	String idCheck(String userId) throws SQLException;
 	
-	@Insert("insert into member (user_id, user_name, user_pass, email_id, email_domain, mbti, gender, age) "
-			+ "values (#{userId}, #{userName}, #{userPass}, #{emailId}, #{emailDomain}, #{mbti}, #{gender}, #{age})")
+	@Insert("insert into member (user_id, user_name, user_pass, email_id, email_domain, mbti, gender, age, content) "
+			+ "values (#{userId}, #{userName}, #{userPass}, #{emailId}, #{emailDomain}, #{mbti}, #{gender}, #{age}, #{content})")
 	@Options(useGeneratedKeys = true, keyProperty = "no")
 	int joinMember(MemberDto memberDto) throws SQLException;
 	
 	@Insert("insert into file_info (user_id, save_folder, original_file, save_file) values (#{userId}, #{saveFolder}, #{originalFile}, #{saveFile})")
 	int insertFileInfo(FileInfo file);
 
-	@Update("update member set user_name = #{userName}, user_pass = #{userPass}, email_id = #{emailId}, email_domain = #{emailDomain} where user_id = #{userId}")
+	@Update("update member set user_name = #{userName}, user_pass = #{userPass}, email_id = #{emailId}, "
+			+ "email_domain = #{emailDomain}, mbti = #{mbti} , gender = #{gender},"
+			+ " age = #{age}, content = #{content} where user_id = #{userId}")
 	int modify(MemberDto memberDto) throws SQLException;
+	
+//	private float star;
+//	private int starCount;
+//	private String mbti;
+//	private String gender;
+//	private int age;
+//	private int hit;
+//	private String content;
+//	private int profileNo;
 	
 	@Delete("delete from member where user_id = #{userId}")
 	int delete(String userId) throws SQLException;
