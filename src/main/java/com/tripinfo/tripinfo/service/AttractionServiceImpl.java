@@ -11,23 +11,27 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class AttractionServiceImpl {
+public class AttractionServiceImpl implements AttractionService {
     private final AttractionMapper mapper;
 
+    @Override
     public List<AttractionInfoDto> getAllAttractionList() {
         return mapper.getAllAttractionList();
     }
 
     // sidoCode가 0이 아니면 넣어주기.
+    @Override
     public List<AttractionInfoDto> searchByTitle(String title, int sidoCode, int contentTypeId) {
         return mapper.searchByTitle(title, sidoCode, contentTypeId);
     }
 
+    @Override
     public List<AttractionInfoDto> randomAttList() {
         return mapper.randomAttList();
     }
 
-	public int insertPlanInfo(TripRouteDto routeDto, List<RouteDetailDto> detailList) {
+	@Override
+    public int insertPlanInfo(TripRouteDto routeDto, List<RouteDetailDto> detailList) {
 		// title이랑 userId로 routeDto를 찾아서 plan_id를 찾아야 할듯
 		String title = routeDto.getTitle();
 		String userId = routeDto.getUserId();

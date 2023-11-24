@@ -10,9 +10,10 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class AttractionSidoServiceImpl {
+public class AttractionSidoServiceImpl implements AttractionSidoService {
     private final AttractionSidoMapper sidoMapper;
 
+    @Override
     public List<SidoDto> sidoList() throws SQLException {
         return sidoMapper.sidoList();
     }
